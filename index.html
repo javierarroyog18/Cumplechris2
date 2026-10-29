@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎂 ¡Feliz Cumpleaños Christian!</title>
+<style>
+  :root{--neon:#ff2d75;--cyan:#00e5ff;--gold:#ffd54a;--glass:rgba(15,15,30,.55)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:100%;height:100%;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;color:#fff;background:#000}
+
+  /* VIDEO DE FONDO */
+  #bgVideo{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  #tint{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,.1) 0%,rgba(0,0,0,.6) 100%)}
+  #confetti{position:fixed;inset:0;z-index:2;pointer-events:none}
+
+  /* DASHBOARD */
+  .app{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;padding:18px 24px;gap:16px}
+  .topbar{display:flex;justify-content:space-between;align-items:center;background:var(--glass);backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:12px 20px;max-width:calc(100% - 220px)}
+  .brand{font-weight:800}.brand span{color:var(--gold)}
+  .status{display:flex;gap:14px;align-items:center;font-size:.9rem}
+  .dot{width:10px;height:10px;border-radius:50%;background:#39ff14;box-shadow:0 0 10px #39ff14;animation:blink 1s infinite}
+  @keyframes blink{50%{opacity:.3}}
+  .btn-sound{background:transparent;border:1px solid var(--cyan);color:var(--cyan);border-radius:20px;padding:5px 12px;cursor:pointer;font-weight:600}
+  .btn-sound:hover{background:var(--cyan);color:#000}
+  .hero{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px}
+  .hero h1{font-size:clamp(2.4rem,7vw,6rem);font-weight:900;line-height:1;
+    background:linear-gradient(90deg,var(--gold),var(--neon),var(--cyan),var(--gold));background-size:300% 100%;
+    -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite;filter:drop-shadow(0 4px 12px rgba(0,0,0,.8))}
+  @keyframes shine{to{background-position:300% 0}}
+  .hero h2{font-size:clamp(1.4rem,3.5vw,2.8rem);font-weight:800;text-shadow:0 0 18px var(--neon),0 3px 6px #000;animation:bounce 1.2s ease-in-out infinite}
+  @keyframes bounce{50%{transform:translateY(-8px) scale(1.03)}}
+  .hero p{font-size:clamp(1rem,1.6vw,1.3rem);text-shadow:0 2px 6px #000}
+  .ticker{background:var(--glass);border-radius:12px;overflow:hidden;white-space:nowrap;padding:8px 0;border:1px solid rgba(255,255,255,.12)}
+  .ticker span{display:inline-block;padding-left:100%;animation:tick 22s linear infinite;font-weight:600}
+  @keyframes tick{to{transform:translateX(-100%)}}
+
+  /* HOMBRE ARAÑA */
+  .corner-web{position:fixed;top:0;right:0;width:230px;height:230px;z-index:4;pointer-events:none;opacity:.85}
+  .spidey{position:fixed;top:0;right:70px;z-index:5;width:150px;cursor:pointer;transform-origin:50% 0;
+    animation:swing 2.6s ease-in-out infinite,drop 1.4s cubic-bezier(.3,1.6,.5,1) both}
+  .spidey:hover{animation-play-state:paused}
+  .spidey:hover .sign{filter:drop-shadow(0 0 12px var(--gold))}
+  @keyframes swing{0%,100%{rotate:-7deg}50%{rotate:7deg}}
+  @keyframes drop{from{transform:translateY(-400px)}to{transform:translateY(0)}}
+  .sign-txt{animation:pulse 1s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+  @keyframes pulse{50%{transform:scale(1.08)}}
+
+  /* INICIO */
+  #start{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;gap:18px;justify-content:center;align-items:center;
+    background:rgba(0,0,0,.85);backdrop-filter:blur(6px);text-align:center;padding:20px}
+  #start h3{font-size:clamp(1.4rem,3vw,2.2rem)}
+  #start button{font-size:1.3rem;font-weight:800;padding:16px 34px;border:none;border-radius:40px;cursor:pointer;color:#000;
+    background:linear-gradient(90deg,var(--gold),var(--neon));box-shadow:0 0 25px var(--neon);animation:bounce 1.2s infinite}
+
+  /* MODAL */
+  #modal{position:fixed;inset:0;z-index:30;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.7);padding:20px}
+  #modal.show{display:flex}
+  .letter{position:relative;max-width:620px;width:100%;max-height:85vh;overflow:auto;background:linear-gradient(160deg,#1b1035,#3a0c2b);
+    border:2px solid var(--gold);border-radius:22px;padding:34px 32px 28px;box-shadow:0 0 50px rgba(255,45,117,.6);animation:pop .5s cubic-bezier(.3,1.6,.5,1)}
+  @keyframes pop{from{transform:scale(.3) rotate(-8deg);opacity:0}}
+  .letter h3{font-size:1.8rem;color:var(--gold);margin-bottom:14px;text-align:center}
+  #msg{font-size:1.1rem;line-height:1.65;white-space:pre-line;min-height:120px}
+  #msg::after{content:'▌';animation:blink .7s infinite;color:var(--neon)}
+  #msg.done::after{content:''}
+  .firma{margin-top:18px;text-align:right;font-weight:800;color:var(--cyan);opacity:0;transition:opacity 1s}
+  .firma.show{opacity:1}
+  .close{position:absolute;top:10px;right:14px;background:none;border:none;color:#fff;font-size:1.6rem;cursor:pointer}
+  #fallback{display:none;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:6;background:rgba(180,0,40,.85);padding:10px 16px;border-radius:12px;font-size:.9rem}
+
+  @media (max-width:900px){.topbar{max-width:100%;margin-top:200px}.spidey{width:115px;right:20px}}
+</style>
+</head>
+<body>
+
+<!-- VIDEO LOCAL (videoplayback.mp4 junto a este index.html) -->
+<video id="bgVideo" src="videoplayback.mp4" autoplay muted loop playsinline preload="auto"></video>
+<div id="tint"></div>
+<canvas id="confetti"></canvas>
+
+<svg class="corner-web" viewBox="0 0 230 230" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="1.3">
+  <line x1="230" y1="0" x2="0" y2="0"/><line x1="230" y1="0" x2="20" y2="110"/>
+  <line x1="230" y1="0" x2="80" y2="200"/><line x1="230" y1="0" x2="160" y2="230"/><line x1="230" y1="0" x2="230" y2="230"/>
+  <path d="M190 0 Q195 18 200 22 Q212 26 230 40"/><path d="M140 0 Q150 30 162 42 Q180 55 186 76 Q205 78 230 90"/>
+  <path d="M90 0 Q105 40 120 63 Q145 85 150 120 Q190 125 230 140"/><path d="M40 0 Q60 55 75 88 Q110 120 115 165 Q170 175 230 190"/>
+</svg>
+
+<div class="spidey" id="spidey" title="¡Dame click!">
+  <svg viewBox="0 0 200 380" xmlns="http://www.w3.org/2000/svg">
+    <line x1="100" y1="0" x2="100" y2="48" stroke="#fff" stroke-width="2.5"/>
+    <path d="M82 44 h17 v26 h-19 z" fill="#d71920"/><path d="M101 44 h17 l2 26 h-19 z" fill="#d71920"/>
+    <path d="M80 70 h19 l1 55 h-24 z" fill="#1a4fd6"/><path d="M101 70 h19 l4 55 h-24 z" fill="#1a4fd6"/>
+    <path d="M74 122 h52 l6 80 h-64 z" fill="#1a4fd6"/><path d="M84 122 h32 l6 80 h-44 z" fill="#d71920"/>
+    <rect x="76" y="122" width="48" height="7" fill="#b3121a"/>
+    <g stroke="#111" stroke-width="2" fill="#111"><ellipse cx="100" cy="172" rx="4" ry="8"/>
+      <line x1="100" y1="168" x2="88" y2="158"/><line x1="100" y1="168" x2="112" y2="158"/>
+      <line x1="100" y1="174" x2="88" y2="186"/><line x1="100" y1="174" x2="112" y2="186"/></g>
+    <path d="M70 198 q-8 30 -10 62" stroke="#d71920" stroke-width="15" stroke-linecap="round" fill="none"/>
+    <path d="M130 198 q8 30 10 62" stroke="#d71920" stroke-width="15" stroke-linecap="round" fill="none"/>
+    <ellipse cx="100" cy="232" rx="27" ry="31" fill="#d71920"/>
+    <g stroke="#7a0b10" stroke-width="1" fill="none"><line x1="100" y1="201" x2="100" y2="263"/><line x1="73" y1="232" x2="127" y2="232"/>
+      <line x1="80" y1="210" x2="120" y2="255"/><line x1="120" y1="210" x2="80" y2="255"/>
+      <ellipse cx="100" cy="232" rx="12" ry="14"/><ellipse cx="100" cy="232" rx="21" ry="24"/></g>
+    <path d="M78 238 q4 14 18 8 q-4 -10 -18 -8z" fill="#fff" stroke="#111" stroke-width="3"/>
+    <path d="M122 238 q-4 14 -18 8 q4 -10 18 -8z" fill="#fff" stroke="#111" stroke-width="3"/>
+    <g class="sign">
+      <line x1="60" y1="262" x2="52" y2="290" stroke="#5a3a1a" stroke-width="3"/><line x1="140" y1="262" x2="148" y2="290" stroke="#5a3a1a" stroke-width="3"/>
+      <rect x="20" y="288" width="160" height="78" rx="12" fill="#ffd54a" stroke="#111" stroke-width="4"/>
+      <g class="sign-txt">
+        <text x="100" y="322" text-anchor="middle" font-size="25" font-weight="900" fill="#d71920" font-family="Impact,Arial Black,sans-serif">¡DAME</text>
+        <text x="100" y="352" text-anchor="middle" font-size="25" font-weight="900" fill="#d71920" font-family="Impact,Arial Black,sans-serif">CLICK! 👆</text>
+      </g>
+    </g>
+    <circle cx="60" cy="262" r="8" fill="#d71920"/><circle cx="140" cy="262" r="8" fill="#d71920"/>
+  </svg>
+</div>
+
+<div class="app">
+  <div class="topbar">
+    <div class="brand">🎂 Birthday<span>Dashboard</span> v1.0</div>
+    <div class="status"><div class="dot"></div><span>Fiesta en vivo</span><span id="clock">--:--:--</span>
+      <button class="btn-sound" id="btnSound">🔇 Activar sonido</button></div>
+  </div>
+  <div class="hero">
+    <h1>¡FELIZ CUMPLEAÑOS!</h1>
+    <h2 id="nombre">🎉 Christian 🎉</h2>
+    <p>🦔 Que este año bailes la vida como el erizo 💃</p>
+  </div>
+  <div class="ticker"><span>🎈 ¡Feliz cumpleaños, Christian! 🎂 Salud, éxitos y mucha rumba 🥳 Que se cumplan todos tus deseos ✨ Hoy no se trabaja, hoy se celebra 🍰 ¡Te queremos un montón! 💛</span></div>
+</div>
+
+<div id="start"><h3>🎁 Christian, tienes una sorpresa de cumpleaños</h3><button id="btnStart">🎉 ¡Abrir la fiesta!</button></div>
+
+<div id="modal"><div class="letter">
+  <button class="close" id="btnClose">✖</button>
+  <h3>💌 Un mensaje para ti</h3><div id="msg"></div><div class="firma" id="firma"></div>
+</div></div>
+
+<div id="fallback">⚠️ No se encontró <b>videoplayback.mp4</b>. Verifica que esté junto a index.html con ese nombre exacto (minúsculas).</div>
+
+<script>
+/* ================== ✏️ PERSONALIZA AQUÍ ================== */
+const CONFIG = {
+  nombre: "Christian",
+  firma:  "Con cariño, tus panas 💛",
+  mensaje:
+`¡Feliz cumpleaños, Christian!
+
+Hoy celebramos a una persona que hace que todo sea más divertido: el que siempre tiene el chiste preciso, el que aparece cuando se le necesita y el que convierte cualquier día normal en una historia para contar.
+
+Gracias por tu amistad, por las risas, por los cafés, por los cuentos y por aguantarnos también. 😅
+
+Te deseamos un año lleno de salud, éxitos, viajes, buena comida y muchísimos momentos para bailar como ese erizo… sin pena y a todo volumen. 🦔💃
+
+¡Que lo disfrutes al máximo, te lo mereces!`
+};
+/* ========================================================= */
+
+document.getElementById('nombre').textContent = `🎉 ${CONFIG.nombre} 🎉`;
+setInterval(()=>{document.getElementById('clock').textContent=new Date().toLocaleTimeString('es-VE')},1000);
+
+/* ---- Video ---- */
+const v=document.getElementById('bgVideo');
+let muted=true;
+v.addEventListener('error',()=>document.getElementById('fallback').style.display='block');
+v.play().catch(()=>{});
+function playWithSound(){v.muted=false;v.volume=1;v.play().catch(()=>{});muted=false;}
+function mute(){v.muted=true;muted=true;}
+const btnSound=document.getElementById('btnSound');
+function updateSoundBtn(){btnSound.textContent=muted?'🔇 Activar sonido':'🔊 Silenciar';}
+btnSound.onclick=()=>{muted?playWithSound():mute();updateSoundBtn();};
+
+document.getElementById('btnStart').onclick=()=>{
+  document.getElementById('start').style.display='none';
+  v.currentTime=0; playWithSound(); updateSoundBtn(); burst(250);
+};
+
+/* ---- Hombre Araña → mensaje ---- */
+let typing;
+document.getElementById('spidey').onclick=()=>{
+  const modal=document.getElementById('modal'),msg=document.getElementById('msg'),firma=document.getElementById('firma');
+  modal.classList.add('show');msg.textContent='';msg.classList.remove('done');firma.classList.remove('show');
+  firma.textContent='— '+CONFIG.firma;burst(200);
+  let i=0;clearInterval(typing);
+  typing=setInterval(()=>{msg.textContent+=CONFIG.mensaje[i++];
+    if(i>=CONFIG.mensaje.length){clearInterval(typing);msg.classList.add('done');firma.classList.add('show');burst(150);}},28);
+};
+document.getElementById('btnClose').onclick=()=>{clearInterval(typing);document.getElementById('modal').classList.remove('show');};
+
+/* ---- Confeti ---- */
+const cv=document.getElementById('confetti'),ctx=cv.getContext('2d');let parts=[];
+function resize(){cv.width=innerWidth;cv.height=innerHeight;}resize();addEventListener('resize',resize);
+const colors=['#ffd54a','#ff2d75','#00e5ff','#39ff14','#ffffff','#ff8a00'];
+function mk(b){return{x:b?innerWidth/2:Math.random()*innerWidth,y:b?innerHeight/2:-20,vx:b?(Math.random()-.5)*16:(Math.random()-.5)*1.5,
+  vy:b?Math.random()*-14-2:Math.random()*2+1,s:Math.random()*7+4,r:Math.random()*360,vr:(Math.random()-.5)*12,c:colors[Math.random()*colors.length|0]};}
+function burst(n){for(let i=0;i<n;i++)parts.push(mk(true));}
+setInterval(()=>{if(parts.length<120)parts.push(mk(false));},120);
+(function loop(){ctx.clearRect(0,0,cv.width,cv.height);
+  parts.forEach(p=>{p.vy+=.18;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r*Math.PI/180);
+    ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);ctx.restore();});
+  parts=parts.filter(p=>p.y<cv.height+30);requestAnimationFrame(loop);})();
+</script>
+</body>
+</html>
